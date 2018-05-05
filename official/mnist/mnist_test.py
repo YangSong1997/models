@@ -26,13 +26,13 @@ from official.mnist import mnist
 BATCH_SIZE = 100
 
 
-def dummy_input_fn():
+def dummy_input_fn():      # make training dataset
   image = tf.random_uniform([BATCH_SIZE, 784])
   labels = tf.random_uniform([BATCH_SIZE, 1], maxval=9, dtype=tf.int32)
   return image, labels
 
 
-def make_estimator():
+def make_estimator():     #make an estimator of the mnist model using the tf framework
   data_format = 'channels_last'
   if tf.test.is_built_with_cuda():
     data_format = 'channels_first'
@@ -45,7 +45,7 @@ def make_estimator():
 class Tests(tf.test.TestCase):
   """Run tests for MNIST model."""
 
-  def test_mnist(self):
+  def test_mnist(self): # set up the models and classifiers
     classifier = make_estimator()
     classifier.train(input_fn=dummy_input_fn, steps=2)
     eval_results = classifier.evaluate(input_fn=dummy_input_fn, steps=1)
